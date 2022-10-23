@@ -3,8 +3,11 @@
 
 /*==================== VARIABLES CSS ====================*/
 :root {
-  --first-color: #4A98F7;
-
+  --first-color: #bc51fa;
+  --button-color: #4A98F7;
+  --light-color: #eee;
+  --gray-color: #6C757D;
+  --background-canvas: #c5c5c5;
 }
 
 /*==================== BASE ====================*/
@@ -24,16 +27,114 @@ body{
   position: relative;
 }
 
-#title{
-  position: absolute;
-  top: 1rem;
-  background: #eee;
-  padding: 0.3rem 1rem;
-  border-radius: 3rem;
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 97vh;
+  gap: 0.625rem;
+  padding: 0.625rem;
 }
 
-#title h1{
+section{
+  /* width: 90vw; */
+  border-radius: 5px;
+}
+
+.tool-board {
+  width: 55rem;
+  background: var(--light-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.2rem;
+}
+
+.tool-area, .colors{
+  display: flex;
+}
+
+.tool-area .option{
+  margin-left: 0.7rem;
+}
+
+.options{
+  list-style: none;
+}
+
+.colors .options{
+  display: flex;
+}
+
+.colors .option{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  margin-top: 3px;
+  margin-left: 0.7rem;
+  position: relative;
+}
+
+.option #color-picker{
+  opacity: 0;
+  cursor: pointer;
+}
+
+.colors .option:nth-child(1){
+  background-color: var(--light-color);
+  border: 1px solid var(--gray-color);
+}
+.colors .option:nth-child(2){
+  background-color: black;
+}
+.colors .option:nth-child(3){
+  background-color: red;
+}
+.colors .option:nth-child(4){
+  background-color: #1e90ff;
+}
+.colors .option:nth-child(5){
+  background-color: yellow;
+}
+.colors .option:nth-child(6){
+  background-color: green;
+}
+
+.buttons{
+  color: var(--light-color);
+  border: none;
+  padding: 0.3rem 0;
+  margin-right: 0.7rem;
+  font-size: 0.9rem;
   text-align: center;
-  color: rgb(228, 36, 180);
+  background: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
+.clear-canvas{
+  width: 6rem;
+  color: var(--gray-color);
+  border: 1px solid var(--gray-color);
+  transition: all 0.3s ease;
+}
+
+.clear-canvas:hover{
+  color: var(--light-color);
+  background: var(--gray-color);
+}
+
+.save-img{
+  width: 9rem;
+  background: var(--button-color);
+  border: 1px solid var(--button-color);
+}
+
+.drawing-board{
+  background: var(--background-canvas);
+  flex: 1;
+  width: 100%;
+  max-width: 65rem;
+}

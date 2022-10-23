@@ -15,51 +15,30 @@
   -->
   <div class="container">
     <section class="tool-board">
-      
       <div class="tool-area">
-        <label class="title">Formas</label>
-        <ul class="options">
-          <li class="option tool" id="rectangle">
-            <img src="assets/icons/rectangle.svg" alt="">
-            <span>Retangulo</span>
-          </li>
-          <li class="option tool" id="circle">
-            <img src="assets/icons/circle.svg" alt="">
-            <span>Circulo</span>
-          </li>
-          <li class="option tool" id="triangle">
-            <img src="assets/icons/triangle.svg" alt="">
-            <span>Triangulo</span>
-          </li>
-          <li class="option">
-            <input type="checkbox" name="" id="fill-color">
-            <label for="fill-color">Preencher</label>
-          </li>
-        </ul>
+        <div class="option tool" id="rectangle">
+          <img src="assets/icons/rectangle.svg" alt="">
+        </div>
+        <div class="option tool" id="circle">
+          <img src="assets/icons/circle.svg" alt="">
+        </div>
+        <div class="option tool" id="triangle">
+          <img src="assets/icons/triangle.svg" alt="">
+        </div>
+        <div class="option tool" id="brush">
+          <img src="assets/icons/brush.svg" alt="">
+        </div>
+        <div class="option tool" id="eraser">
+          <img src="assets/icons/eraser.svg" alt="">
+        </div>
+        <input type="range" class="option" id="size-slider" min="1" max="30" value="5">
       </div>
 
-      <div class="tool-area">
-        <label class="title">Opções</label>
-        <ul class="options">
-          <li class="option active tool" id="brush">
-            <img src="assets/icons/brush.svg" alt="">
-            <span>Pincel</span>
-          </li>
-          <li class="option tool" id="eraser">
-            <img src="assets/icons/eraser.svg" alt="">
-            <span>Borracha</span>
-          </li>
-          <li class="option">
-            <input type="range" name="" id="size-slider" min="1" max="30" value="5">
-          </li>
-        </ul>
-      </div>
-
-      <div class="tool-area colors">
-        <label class="title">Cores</label>
+      <div class="colors">
         <ul class="options">
           <li class="option"></li>
           <li class="option selected"></li>
+          <li class="option"></li>
           <li class="option"></li>
           <li class="option"></li>
           <li class="option">
@@ -68,10 +47,10 @@
         </ul>
       </div>
 
-      <div class="tool-area buttons">
-        <button class="clear-canvas">Limpar</button>
-        <button class="save-img">Salvar imagem</button>
-       </div>
+      <div class="tool-area">
+        <div class="clear-canvas buttons">Limpar</div>
+        <div class="save-img buttons">Salvar imagem</div>
+      </div>
     </section>
     <section class="drawing-board">
       <canvas id="canvas"></canvas>
