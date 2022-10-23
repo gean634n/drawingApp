@@ -19,7 +19,11 @@ const drawRectangle = (e) => {
 }
 
 const drawCircle = (e) => {
-  console.log('circulo');
+  ctx.beginPath(); // inicia um novo caminho para desenhar o circulo
+  // encontrando o raio do circulo de acordo com a posição do mause utilizando 'pitagoras'
+  let radius = Math.sqrt(Math.pow((prevMouseX - e.offsetX), 2) + Math.pow((prevMouseY - e.offsetY), 2));
+  ctx.arc(prevMouseX, prevMouseY, radius, 0, 2 * Math.PI); // cria um circulo de acordo com as coordenadas do mause
+  ctx.stroke(); // avalia a opção fillColor para saber se o circulo é preenchido ou não
 }
 
 const drawTriangle = (e) => {
