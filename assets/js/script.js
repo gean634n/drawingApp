@@ -27,7 +27,12 @@ const drawCircle = (e) => {
 }
 
 const drawTriangle = (e) => {
-  console.log('triangulo');
+  ctx.beginPath(); // inicia um novo caminho para desenhar o triangulo
+  ctx.moveTo(prevMouseX, prevMouseY) // move o mause para o inicio do triangulo
+  ctx.lineTo(e.offsetX, e.offsetY); // cria a primeira linha de acordo com a posição do mause
+  ctx.lineTo(prevMouseX * 2 - e.offsetX, e.offsetY); // cria a linha de baixo do triangulo
+  ctx.closePath(); // fecha altomaticamento o triangulo
+  ctx.stroke();
 }
 
 const draw = {
