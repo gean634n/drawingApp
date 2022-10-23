@@ -63,6 +63,10 @@ section{
   list-style: none;
 }
 
+.option:is(:hover, .active) img{
+  filter: sepia(40%) saturate(3000%) hue-rotate(900deg) brightness(100%) contrast(100%);
+}
+
 .colors .options{
   display: flex;
 }
