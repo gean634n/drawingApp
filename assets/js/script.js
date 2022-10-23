@@ -7,10 +7,23 @@ const ctx = canvas.getContext('2d');
 let isDrawing = false;
 let prevMouseX;
 let prevMouseY;
+let selectedTool = 'brush';
 
 const setBackground = () => {
   ctx.fillStyle = '#fff';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+const drawRectangle = (e) => {
+  ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
+}
+
+const drawCircle = (e) => {
+  console.log('circulo');
+}
+
+const drawTriangle = (e) => {
+  console.log('triangulo');
 }
 
 const draw = {
@@ -19,12 +32,27 @@ const draw = {
     prevMouseX = e.offsetX; // passa a posição atual de X para a variavel prevMauseX
     prevMouseY = e.offsetY; // passa a posição atual de Y para a variavel prevMauseY
     ctx.beginPath(); // cria um novo caminho, ou seja, faz com que cada traço seja independente
-    console.log();
+    snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height); // copia a tela no exato momento em que o desenho comecar
   },
   drawing: (e) => {
     if(!isDrawing) return;
-    ctx.lineTo(e.offsetX, e.offsetY); // cria linha seguindo o ponteiro do mause
-    ctx.stroke(); // desenha a linha
+    ctx.putImageData(snapshot, 0, 0); //adiciona a tela copiada a nosso tela (linha 35), necessario para as ferramentas de formas geometricas.
+
+    switch (selectedTool) {
+      case 'rectangle':
+        drawRectangle(e);
+        break;
+      case 'circle':
+        drawCircle(e);
+        break;
+      case 'triangle':
+        drawTriangle(e);
+        break;
+      default:
+         ctx.lineTo(e.offsetX, e.offsetY); // cria linha seguindo o ponteiro do mause
+        ctx.stroke(); // desenha a linha
+        break;
+    }
   },
   stop: () => isDrawing = false,
 }
@@ -39,8 +67,7 @@ toolBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelector('.tool-area .active').classList.remove('active');
     btn.classList.add('active');
-    // selectedTool = btn.id;
-    console.log(btn.id);
+    selectedTool = btn.id;
   })
 })
 
