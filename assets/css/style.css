@@ -1,0 +1,39 @@
+/*==================== GOOGLE FONTS ====================*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/*==================== VARIABLES CSS ====================*/
+:root {
+  --first-color: #4A98F7;
+
+}
+
+/*==================== BASE ====================*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--first-color);
+  position: relative;
+}
+
+#title{
+  position: absolute;
+  top: 1rem;
+  background: #eee;
+  padding: 0.3rem 1rem;
+  border-radius: 3rem;
+}
+
+#title h1{
+  text-align: center;
+  color: rgb(228, 36, 180);
+}
+
