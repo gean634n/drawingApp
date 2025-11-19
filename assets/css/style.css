@@ -3,7 +3,7 @@
 
 /*==================== VARIABLES CSS ====================*/
 :root {
-  --first-color: #bc51fa;
+  --first-color: #42043f;
   --button-color: #4A98F7;
   --light-color: #eee;
   --gray-color: #6C757D;
@@ -90,19 +90,24 @@ section{
   border: 1px solid var(--gray-color);
 }
 .colors .option:nth-child(2){
-  background-color: black;
+  background-color: #000000;
 }
 .colors .option:nth-child(3){
-  background-color: red;
+  background-color: #ff0000;
 }
 .colors .option:nth-child(4){
   background-color: #1e90ff;
 }
 .colors .option:nth-child(5){
-  background-color: yellow;
+  background-color: #ffff00;
 }
 .colors .option:nth-child(6){
-  background-color: green;
+  background-color: #008000;
+}
+
+.selected{
+  border: 2px solid var(--gray-color);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .buttons{
