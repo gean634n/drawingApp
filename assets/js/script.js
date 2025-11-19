@@ -1,5 +1,6 @@
 const canvas = document.getElementById('canvas');
 const toolBtns = document.querySelectorAll('.tool');
+const clearButton = document.getElementById('clear');
 
 
 const ctx = canvas.getContext('2d');
@@ -83,3 +84,4 @@ toolBtns.forEach(btn => {
 canvas.addEventListener('mousedown', draw.start)
 canvas.addEventListener('mousemove', draw.drawing)
 canvas.addEventListener('mouseup', draw.stop)
+clearButton.addEventListener('click', setBackground)
