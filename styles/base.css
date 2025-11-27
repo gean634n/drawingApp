@@ -1,0 +1,21 @@
+/*==================== GOOGLE FONTS ====================*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/*==================== VARIABLES CSS ====================*/
+:root {
+    --first-color: #519afa;
+    --button-color: #4a98f7;
+    --light-color: #eee;
+    --gray-color: #6c757d;
+    --background-canvas: #c5c5c5;
+}
+
+/*==================== BASE ====================*/
+* {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}

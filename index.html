@@ -4,60 +4,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="./styles/layout.css">
+  <link rel="stylesheet" href="./styles/base.css">
+
   <!-- O atributo 'defer' faz com que o código espere o carregamento da pagina antes de executar-->
-  <script src="assets/js/script.js" defer></script>
+  <script src="src/main.js" defer></script>
   <title>Drawing App</title>
 </head>
 <body>
-  <!--
-    <div id="title">
-      <h1>Aplicativo de desenho da Agatha e da Ana</h1>
-    </div>
-  -->
-  <div class="container">
-    <section class="tool-board">
-      <div class="tool-area">
-        <div class="option tool" id="rectangle">
-          <img src="assets/icons/rectangle.svg" alt="">
-        </div>
-        <div class="option tool" id="circle">
-          <img src="assets/icons/circle.svg" alt="">
-        </div>
-        <div class="option tool" id="triangle">
-          <img src="assets/icons/triangle.svg" alt="">
-        </div>
-        <div class="option tool active" id="brush">
-          <img src="assets/icons/brush.svg" alt="">
-        </div>
-        <div class="option tool" id="eraser">
-          <img src="assets/icons/eraser.svg" alt="">
-        </div>
-        <input type="range" class="option" id="size-slider" min="1" max="30" value="5">
-      </div>
-
-      <div class="colors">
-        <ul class="options">
-          <li class="option"></li>
-          <li class="option selected"></li>
-          <li class="option"></li>
-          <li class="option"></li>
-          <li class="option"></li>
-          <li class="option">
-            <input type="color" id="color-picker" value="#4A98F7">
-          </li>
-        </ul>
-      </div>
-
-      <div class="tool-area">
-        <div class="clear-canvas buttons">Limpar</div>
-        <div class="save-img buttons">Salvar imagem</div>
-      </div>
-    </section>
-    <section class="drawing-board">
-      <canvas id="canvas"></canvas>
-    </section>
-
+    <canvas id="myCanvas"></canvas>
   </div>
 </body>
 </html>
