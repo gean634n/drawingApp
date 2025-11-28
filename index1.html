@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/style.css">
+  <!-- O atributo 'defer' faz com que o código espere o carregamento da pagina antes de executar-->
+  <script src="src/main.js" defer></script>
+  <title>Drawing App</title>
+</head>
+<body>
+    <!-- menu section -->
+    <section class="tool-board">
+      <div class="color">
+        <input type="color" id="color-picker" value="#4A98F7">
+      </div>
+
+      <input type="range" class="slider" id="size-slider" min="1" max="30" value="5">
+    
+
+      <div class="stroke">
+          <!-- <div class="stroke-option bar"> </div>
+          <li class="option selected"> </li>
+          <li class="option"> </li> -->
+              <div id="bar1" class="bar"></div>
+    <div id="bar2" class="bar"></div>
+    <div id="bar3" class="bar"></div>
+      </div>
+
+      <div class="tool-area">
+        <div class="clear-canvas buttons" id="undu">Undu</div>
+        <div class="clear-canvas buttons" id="redo">Redo</div>
+        <div class="clear-canvas buttons" id="clear">Clear</div>
+        <!-- <div class="save-img buttons" id="save">Salvar imagem</div> -->
+      </div>
+    </section>
+
+
+    <!-- canvas sectioin -->
+    <section class="drawing-board">
+      <canvas id="canvas"></canvas>
+    </section>
+</body>
+</html>
