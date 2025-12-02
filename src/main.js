@@ -20,14 +20,6 @@ const ctx = canvas.getContext("2d");
 ctx.lineJoin = "round";
 ctx.lineCap = "round";
 
-window.addEventListener("resize", () => {
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-    ctx.lineJoin = "round";
-    ctx.lineCap = "round";
-})
-
-
 
 /* ==================== 2. VARIÁVEIS DE ESTADO DO DESENHO ==================== */
 
@@ -72,20 +64,21 @@ function drawSmoothSegment(currentX, currentY) {
 /* ==================== 4. CONFIGURAÇÕES INTERATIVAS (UI) ==================== */
 
 // --- 4.1 Cor de Fundo (Input type="color") ---
-colorInput.addEventListener("input", function () {
+colorInput.addEventListener("input", () => {
     const backgroundColor = colorInput.value;
     body.style.backgroundColor = backgroundColor;
 }, false);
 
 // --- 4.2 Espessura da Linha (Input type="range") ---
-sizeInput.oninput = function () {
-    // Interrompe o desenho brevemente para evitar bugs ao mudar o tamanho
+function resizeLine () {
+      // Interrompe o desenho brevemente para evitar bugs ao mudar o tamanho
     isDrawing = false; 
     
     lineWidth = sizeInput.value;
     sizeOutput.innerHTML = lineWidth;
     ctx.lineWidth = lineWidth;
-};
+}
+sizeInput.oninput = () => resizeLine();
 
 // --- 4.3 Cores Predefinidas (.color) ---
 const colorButtons = Array.from(document.querySelectorAll(".color"));
@@ -183,3 +176,12 @@ canvas.addEventListener("touchmove", e => {
     // Delega a lógica de desenho à função dedicada
     drawSmoothSegment(touch.clientX, touch.clientY);
 });
+
+
+window.addEventListener("resize", () => {
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    resizeLine()
+})

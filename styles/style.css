@@ -153,6 +153,57 @@ input[type="color"]:hover {
     accent-color: var(--white-color);
 }
 
+/* button.line-style {
+    background-color: var(--gray-color); 
+    padding: .1em .5em; 
+} */
+/*==================== ESTILOS DE LINHA HAMBÚRGUER NO MENU ====================*/
+
+/* Estilo base do botão/contêiner */
+.line-toggle-button {
+    width: 50px; /* Largura fixa */
+    height: 40px; /* Altura fixa */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+
+}
+
+/* Estilo base para cada linha interna (span) */
+.line-toggle-button .line {
+    display: block;
+    width: 80%;
+    height: 0; /* A altura será dada pela espessura da borda */
+    border-bottom-width: 3px;
+    border-bottom-color: var(--white-color);
+    border-bottom-style: solid; /* Padrão, será sobrescrito */
+}
+
+/* 1. Linha Contínua (primeira) */
+.line-toggle-button .solid-line {
+    border-bottom-style: solid;
+}
+
+/* 2. Linha Tracejada (meio) */
+.line-toggle-button .dashed-line {
+    border-bottom-style: dashed;
+}
+
+/* 3. Linha Pontilhada (última) */
+.line-toggle-button .dotted-line {
+    border-bottom-style: dotted;
+}
+
+/* Opcional: Ajuste para telas pequenas */
+@media screen and (max-width: 576px) {
+    .line-toggle-button {
+        width: 40px;
+        height: 35px;
+    }
+}
+
 /*==================== OUTROS ELEMENTOS ====================*/
 .emoji {
     font-size: 40px;
