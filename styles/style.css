@@ -1,0 +1,233 @@
+/*==================== GOOGLE FONTS ====================*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/*==================== VARIABLES CSS ====================*/
+:root {
+    --first-color: #004e92;
+    --second-color: #000428;
+    --button-primary: #03bb56; /* Novo nome para o botão principal */
+    --button-save: #0f65d4; /* Variável para o botão 'save' */
+    --light-color: #eee;
+    --gray-color: #6c757d;
+    --background-canvas: #c5c5c5;
+    --white-color: white; /* Adicionada para consistência */
+    --nav-gradient: linear-gradient(
+        to right,
+        var(--first-color) 50%,
+        var(--second-color) 100%
+    );
+    --range-gradient: linear-gradient(
+        to right,
+        var(--second-color) 0%,
+        var(--first-color) 100%
+    );
+}
+
+/*==================== BASE ====================*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+canvas {
+    display: block;
+}
+
+/*==================== NAVEGAÇÃO (NAV) ====================*/
+.nav {
+    width: auto;
+    height: 50px;
+    position: fixed;
+    top: 1%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transition: opacity 0.5s;
+    background: var(--nav-gradient);
+    padding: 20px 5px;
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+}
+
+.nav div,
+.nav button,
+.nav input {
+    margin: 5px;
+}
+
+.nav:hover {
+    cursor: pointer;
+}
+
+/*==================== BOTÕES (BUTTONS) ====================*/
+
+/* Estilos base para todos os botões e elementos clicáveis com transição */
+button,
+input[type="color"] {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+button:hover,
+input[type="color"]:hover {
+    transform: scale(1.05); /* Aplica o hover para botões e inputs de cor */
+}
+
+/* Estilos padrão para botões */
+button {
+    border: 3px solid var(--white-color);
+    outline: none;
+    padding: 0.1em 1em;
+    border-radius: 3px;
+    background-color: var(--button-primary); /* Usando variável */
+    color: var(--white-color);
+    font-size: 15px;
+    font-weight: bold;
+    /* Remover 'transition' e 'cursor' daqui, pois já estão em um seletor agrupado acima */
+}
+
+.save {
+    background-color: var(--button-save); /* Usando variável */
+}
+
+/*==================== SELETORES DE COR (COLOR PICKERS/SAMPLES) ====================*/
+.color {
+    height: 30px;
+    width: 30px;
+    background-color: blue; /* Padrão, será sobrescrito pelo nth-child */
+    border-radius: 50%;
+    border: 3px solid var(--white-color);
+    transition: transform 0.5s;
+}
+
+.color:hover {
+    transform: scale(1.2);
+}
+
+/* Cores específicas: Mantenha, pois é o único lugar que define as cores */
+.color:nth-child(1) { background-color: black;}
+.color:nth-child(2) { background-color: red;}
+.color:nth-child(3) { background-color: orange;}
+.color:nth-child(4) { background-color: blue;}
+.color:nth-child(5) { background-color: purple;}
+.color:nth-child(6) { background-color: yellowgreen;}
+.color:nth-child(7) { background-color: yellow;}
+.color:nth-child(8) { background-color: white;}
+
+
+/*==================== INPUT DE COR (TYPE="COLOR") ====================*/
+input[type="color"] {
+    width: 70px;
+    height: 31px;
+    border: 0 solid var(--white-color);
+    border-left: 2px solid var(--white-color);
+    border-right: 2px solid var(--white-color);
+    border-radius: 3px;
+    /* 'cursor' e 'transition' e 'hover' movidos para o grupo 'button, input[type="color"]' */
+}
+
+/* Sobrescrevendo o hover para o input[type="color"] para ser mais perceptível */
+input[type="color"]:hover {
+    transform: scale(1.1);
+}
+
+/*==================== INPUT DE RANGE (ID="ageInputId") ====================*/
+#ageOutputId {
+    color: var(--white-color);
+    font-weight: bold;
+    font-size: 15pt;
+}
+
+#ageInputId {
+    background: var(--range-gradient); /* Usando variável */
+    height: 7px;
+    outline: none;
+    -webkit-appearance: none;
+    cursor: ew-resize;
+    border-radius: 5px;
+    border: 1px solid var(--white-color);
+    accent-color: var(--white-color);
+}
+
+/*==================== OUTROS ELEMENTOS ====================*/
+.emoji {
+    font-size: 40px;
+    transform: translate(30px, -10px);
+}
+
+/*==================== MEDIA QUERIES (RESPONSIVIDADE) ====================*/
+
+/* 1. Ajuste para Telas Médias (ex: Tablets e alguns Desktops menores) */
+@media screen and (max-width: 992px) {
+    /* Diminui o espaçamento interno da barra de navegação */
+    .nav {
+        padding: 15px 5px;
+        /* Se o nav for muito largo, força uma largura máxima */
+        max-width: 90%; 
+    }
+}
+
+/* 2. Ajuste para Telas Pequenas (ex: Celulares) */
+@media screen and (max-width: 576px) {
+    /* Centraliza e torna a barra mais compacta */
+    .nav {
+        /* Posição: Passa de 'fixed' para 'absolute' (ou 'static') e usa margem 
+           para dar espaço, mas mantém 'fixed' se você quiser que ele role junto */
+        top: 10px; /* Mais perto do topo */
+        left: 50%;
+        transform: translateX(-50%);
+        
+        /* Layout: Permite que os itens quebrem a linha */
+        flex-wrap: wrap; 
+        
+        /* Largura: Ocupa quase toda a largura para acomodar os controles */
+        width: 95%; 
+        height: auto; /* Permite que a altura se ajuste com a quebra de linha */
+        
+        /* Ajusta o padding para telas menores */
+        padding: 10px;
+    }
+
+    /* Reduz o tamanho de alguns elementos para economizar espaço */
+    .nav div,
+    .nav button,
+    .nav input {
+        margin: 3px; /* Espaçamento menor entre os controles */
+        /* Garante que os controles sejam menores em telas pequenas */
+        flex-basis: auto; 
+    }
+    
+    /* Reduz o tamanho das bolinhas de cor */
+    .color {
+        height: 20px;
+        width: 20px;
+        border-width: 2px;
+    }
+    
+    /* Reduz o tamanho da fonte e do botão de espessura */
+    button {
+        font-size: 12px;
+        padding: .1em .8em;
+    }
+
+    /* Reduz o tamanho do input de cor */
+    input[type="color"] {
+        width: 50px;
+        height: 25px;
+    }
+    
+    /* Reduz o tamanho do emoji se estiver muito grande */
+    .emoji {
+        font-size: 30px;
+        transform: translate(20px, -5px);
+    }
+    
+    /* Reduz a fonte da saída de espessura */
+    #ageOutputId {
+        font-size: 12pt;
+    }
+}
