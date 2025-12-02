@@ -3,7 +3,8 @@
 
 /*==================== VARIABLES CSS ====================*/
 :root {
-    --first-color: #519afa;
+    --first-color: #4568dc;
+    --second-color: #b06a;
     --button-color: #4a98f7;
     --light-color: #eee;
     --gray-color: #6c757d;
@@ -14,8 +15,6 @@
 * {
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
