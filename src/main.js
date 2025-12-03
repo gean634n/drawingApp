@@ -1,5 +1,4 @@
 /* ==================== 1. SELETORES E CONFIGURAÇÃO INICIAL ==================== */
-
 // Seleciona os elementos principais
 const canvas = document.getElementById("myCanvas");
 const body = document.querySelector("body");
@@ -21,6 +20,10 @@ ctx.lineCap = "round";
 let lineWidth = 5;  // Espessura atual da linha
 let isDrawing = false; // Flag para rastrear se o mouse está pressionado
 
+// Variáveis para o histórico e o caminho atual
+let paths = []; // Armazena todos os traços (para o histórico/Undo)
+let currentPath = []; // Armazena os pontos do traço que está sendo desenhado
+
 // Variáveis para a técnica de Curvas de Bézier Quadráticas
 let prevX = null;
 let prevY = null;
@@ -32,8 +35,54 @@ ctx.lineWidth = lineWidth;
 body.style.backgroundColor = "#ffffff";
 
 /* ==================== 3. LÓGICA DO DESENHO ==================== */
-// Desenha segmento de linha suave usando Curvas Quadráticas
+// Desenha todos os caminhos armazenados no histórico
+function redrawCanvas() {
+    // 1. Limpa o canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 2. Redesenha todos os caminhos do histórico
+    paths.forEach(path => {
+        // Redefine as configurações para cada caminho (se tivéssemos largura/cor salvas)
+        ctx.lineWidth = path.lineWidth;
+        ctx.strokeStyle = path.strokeStyle;
+        
+        let localPrevX = path.points[0].x;
+        let localPrevY = path.points[0].y;
+        let localPrevMidX = path.points[0].x;
+        let localPrevMidY = path.points[0].y;
+
+        // Loop sobre os pontos e desenha o segmento suave
+        for (let i = 1; i < path.points.length; i++) {
+            const currentPoint = path.points[i];
+            const currentX = currentPoint.x;
+            const currentY = currentPoint.y;
+
+            const midX = (localPrevX + currentX) / 2;
+            const midY = (localPrevY + currentY) / 2;
+
+            ctx.beginPath();
+            ctx.moveTo(localPrevMidX, localPrevMidY);
+            ctx.quadraticCurveTo(localPrevX, localPrevY, midX, midY);
+            ctx.stroke();
+
+            localPrevX = currentX;
+            localPrevY = currentY;
+            localPrevMidX = midX;
+            localPrevMidY = midY;
+        }
+    });
+
+    // Redefine as configurações para o traço ativo (após redesenhar o histórico)
+    ctx.lineWidth = lineWidth;
+    ctx.strokeStyle = ctx.strokeStyle; // Mantém a cor atual (a cor é alterada por 4.3)
+}
+
+// Desenha segmento de linha suave usando Curvas Quadráticase armazena o ponto
 function drawSmoothSegment(currentX, currentY) {
+
+    // Armazena o ponto no caminho atual
+    currentPath.push({ x: currentX, y: currentY });
+
     // Calcula o ponto médio (endpoint da curva)
     const midX = (prevX + currentX) / 2;
     const midY = (prevY + currentY) / 2;
@@ -86,6 +135,7 @@ colorButtons.forEach(button => {
 // --- 4.4 Botão Limpar Canvas (.clear) ---
 const clearBtn = document.querySelector(".clear");
 clearBtn.addEventListener("click", () => {
+    paths = [];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
 
@@ -105,6 +155,12 @@ saveBtn.addEventListener("click", () => {
 canvas.addEventListener("mousedown", e => {
     isDrawing = true;
 
+    // Inicia um novo currentPath
+    currentPath = [
+        // Salva o ponto inicial
+        { x: e.clientX, y: e.clientY } 
+    ];
+
     // Captura o ponto inicial
     prevX = e.clientX;
     prevY = e.clientY;
@@ -115,7 +171,18 @@ canvas.addEventListener("mousedown", e => {
 });
 
 // --- 5.2 Fim do Desenho (mouseup, mouseleave) ---
-canvas.addEventListener("mouseup", () => isDrawing = false);
+canvas.addEventListener("mouseup", () => {
+    if (isDrawing) {
+        // Salva o caminho completo no histórico (paths)
+        paths.push({
+            points: currentPath,
+            lineWidth: lineWidth,
+            strokeStyle: ctx.strokeStyle 
+        });
+        currentPath = []; // Limpa o buffer do caminho atual
+    }
+    isDrawing = false;
+});
 canvas.addEventListener("mouseleave", () => isDrawing = false);
 
 // --- 5.3 Desenho em Movimento (mousemove) ---
@@ -140,6 +207,12 @@ canvas.addEventListener("touchstart", e => {
     // Eventos de toque usam a propriedade touches[0] para obter o primeiro ponto
     const touch = e.touches[0];
 
+    // Inicia um novo currentPath
+    currentPath = [
+        // Salva o ponto inicial
+        { x: touch.clientX, y: touch.clientY }
+    ];
+
     // Captura o ponto inicial do toque
     prevX = touch.clientX;
     prevY = touch.clientY;
@@ -151,7 +224,18 @@ canvas.addEventListener("touchstart", e => {
 
 // --- 6.2 Fim do Toque (touchend, touchcancel) ---
 // Para de desenhar quando o toque é levantado ou cancelado
-canvas.addEventListener("touchend", () => isDrawing = false);
+canvas.addEventListener("touchend", () => {
+    if (isDrawing) {
+        // NOVO: Salva o caminho completo no histórico (paths)
+        paths.push({
+            points: currentPath,
+            lineWidth: lineWidth,
+            strokeStyle: ctx.strokeStyle 
+        });
+        currentPath = []; // Limpa o buffer do caminho atual
+    }
+    isDrawing = false;
+});
 canvas.addEventListener("touchcancel", () => isDrawing = false);
 
 // --- 6.3 Movimento do Toque (touchmove) ---
