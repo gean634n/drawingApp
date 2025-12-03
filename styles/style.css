@@ -168,7 +168,7 @@ input[type="color"]:hover {
     justify-content: space-around;
     align-items: center;
     padding: 5px;
-
+    cursor: default;
 }
 
 /* Estilo base para cada linha interna (span) */
@@ -179,6 +179,7 @@ input[type="color"]:hover {
     border-bottom-width: 3px;
     border-bottom-color: var(--white-color);
     border-bottom-style: solid; /* Padrão, será sobrescrito */
+    cursor: pointer;
 }
 
 /* 1. Linha Contínua (primeira) */
@@ -192,8 +193,14 @@ input[type="color"]:hover {
 }
 
 /* 3. Linha Pontilhada (última) */
-.line-toggle-button .dotted-line {
+.line-toggle-button .dotted-line{
     border-bottom-style: dotted;
+}
+
+/* linha ativa */
+.line-toggle-button .active{
+    border-color: yellow; /* Destaca a borda do botão ativo */
+    box-shadow: 0 0 5px yellow; /* Opcional: Adiciona um brilho */
 }
 
 /* Opcional: Ajuste para telas pequenas */

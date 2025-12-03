@@ -10,10 +10,6 @@ const sizeOutput = document.getElementById("ageOutputId"); // Elemento para most
 // Configura o tamanho inicial do canvas
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
-window.addEventListener("resize", () => {
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-})
 
 // Obtém o contexto 2D do canvas para desenhar
 const ctx = canvas.getContext("2d");
@@ -22,7 +18,6 @@ ctx.lineCap = "round";
 
 
 /* ==================== 2. VARIÁVEIS DE ESTADO DO DESENHO ==================== */
-
 let lineWidth = 5;  // Espessura atual da linha
 let isDrawing = false; // Flag para rastrear se o mouse está pressionado
 
@@ -36,11 +31,8 @@ let prevMidY = null;
 ctx.lineWidth = lineWidth;
 body.style.backgroundColor = "#ffffff";
 
-
-
-/* ==================== 3. LÓGICA DO DESENHO SUAVE ==================== */
-
-// Função para desenhar um segmento de linha suave usando Curvas Quadráticas
+/* ==================== 3. LÓGICA DO DESENHO ==================== */
+// Desenha segmento de linha suave usando Curvas Quadráticas
 function drawSmoothSegment(currentX, currentY) {
     // Calcula o ponto médio (endpoint da curva)
     const midX = (prevX + currentX) / 2;
@@ -61,8 +53,7 @@ function drawSmoothSegment(currentX, currentY) {
     prevMidY = midY;
 }
 
-/* ==================== 4. CONFIGURAÇÕES INTERATIVAS (UI) ==================== */
-
+/* ==================== 4. CONFIGURAÇÕES INTERATIVAS ==================== */
 // --- 4.1 Cor de Fundo (Input type="color") ---
 colorInput.addEventListener("input", () => {
     const backgroundColor = colorInput.value;
@@ -71,12 +62,15 @@ colorInput.addEventListener("input", () => {
 
 // --- 4.2 Espessura da Linha (Input type="range") ---
 function resizeLine () {
-      // Interrompe o desenho brevemente para evitar bugs ao mudar o tamanho
+    // Interrompe o desenho brevemente para evitar bugs ao mudar o tamanho
     isDrawing = false; 
     
     lineWidth = sizeInput.value;
     sizeOutput.innerHTML = lineWidth;
     ctx.lineWidth = lineWidth;
+    
+    // Garante que o traço seja contínuo ao mudar a espessura
+    ctx.setLineDash([]); 
 }
 sizeInput.oninput = () => resizeLine();
 
@@ -106,10 +100,7 @@ saveBtn.addEventListener("click", () => {
     a.click();
 });
 
-
-
 /* ==================== 5. EVENTOS DO MOUSE (INTERAÇÃO) ==================== */
-
 // --- 5.1 Início do Desenho (mousedown) ---
 canvas.addEventListener("mousedown", e => {
     isDrawing = true;
@@ -178,10 +169,12 @@ canvas.addEventListener("touchmove", e => {
 });
 
 
+// Listener de redimensionamento da janela
 window.addEventListener("resize", () => {
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
-    resizeLine()
-})
+    // Chama resizeLine para reconfigurar a espessura e o traço contínuo
+    resizeLine(); 
+});
