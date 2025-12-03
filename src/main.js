@@ -1,17 +1,26 @@
+/**
+ * Módulos Nativos (ES Modules) são importados.
+ * A extensão '.js' é obrigatória no navegador.
+ */
 import { CanvasRenderer } from './CanvasRenderer.js';
 import { UI } from './UI.js';
 
-// Objeto App para inicializar e coordenar os módulos
+/**
+ * Objeto principal da Aplicação (App).
+ * Sua única responsabilidade é inicializar e coordenar os módulos.
+ */
 const App = {
     init() {
-        // 1. Inicializa o renderizador (configura o canvas e listeners de resize)
+        // A ordem de inicialização é importante:
+        // O Renderer (canvas) deve ser configurado antes da UI (eventos de desenho).)
         CanvasRenderer.init();
-        // 2. Inicializa a UI (configura botões e listeners de mouse/toque)
         UI.init();
     }
 };
 
-// Inicia a aplicação após o DOM ser completamente carregado
+/**
+ * Inicia a aplicação após o DOM ser completamente carregado.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     App.init();
 });
