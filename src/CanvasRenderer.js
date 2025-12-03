@@ -5,7 +5,7 @@ export const CanvasRenderer = {
     canvas: document.getElementById("myCanvas"),
     ctx: null,
 
-    // 2.1 Configuração inicial
+    // 1 Configuração inicial
     init() {
         this.canvas.height = window.innerHeight;
         this.canvas.width = window.innerWidth;
@@ -18,16 +18,23 @@ export const CanvasRenderer = {
         this.ctx.strokeStyle = State.strokeColor;
     },
 
-    // 2.2 Limpa o canvas e redesenha o histórico
+    // Função Auxiliar desenha uma Curva de Bézier Quadrática
+    _drawSegment(prevMidX, prevMidY, prevX, prevY, midX, midY) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(prevMidX, prevMidY);
+        // O ponto de controle é (prevX, prevY)
+        this.ctx.quadraticCurveTo(prevX, prevY, midX, midY);
+        this.ctx.stroke();
+    },
+
+    // 2 Limpa o canvas e redesenha o histórico
     redrawCanvas() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // Redesenha todos os caminhos do histórico
         State.paths.forEach(path => {
             this.ctx.lineWidth = path.lineWidth;
             this.ctx.strokeStyle = path.strokeStyle;
             
-            // Lógica de redesenho da Curva de Bézier Quadrática
             let localPrevX = path.points[0].x;
             let localPrevY = path.points[0].y;
             let localPrevMidX = path.points[0].x;
@@ -41,11 +48,9 @@ export const CanvasRenderer = {
                 const midX = (localPrevX + currentX) / 2;
                 const midY = (localPrevY + currentY) / 2;
 
-                this.ctx.beginPath();
-                this.ctx.moveTo(localPrevMidX, localPrevMidY);
-                this.ctx.quadraticCurveTo(localPrevX, localPrevY, midX, midY);
-                this.ctx.stroke();
-
+                // Chama Função Auxiliar
+                this._drawSegment(localPrevMidX, localPrevMidY, localPrevX, localPrevY, midX, midY);
+                
                 localPrevX = currentX;
                 localPrevY = currentY;
                 localPrevMidX = midX;
@@ -53,17 +58,14 @@ export const CanvasRenderer = {
             }
         });
 
-        // Redefine as configurações para o traço ativo
         this.ctx.lineWidth = State.lineWidth;
         this.ctx.strokeStyle = State.strokeColor;
     },
 
     // 2.3 Desenha segmento de linha suave usando Curvas Quadráticas
     drawSmoothSegment(currentX, currentY) {
-        // Armazena o ponto no caminho atual
         State.currentPath.push({ x: currentX, y: currentY });
 
-        // Se State.prevX for null (início do desenho), desenha um ponto
         if (State.prevX === null) {
             State.prevX = currentX;
             State.prevY = currentY;
@@ -75,19 +77,12 @@ export const CanvasRenderer = {
             return;
         }
 
-        // Calcula o ponto médio (endpoint da curva)
         const midX = (State.prevX + currentX) / 2;
         const midY = (State.prevY + currentY) / 2;
 
-        this.ctx.beginPath();
-        this.ctx.moveTo(State.prevMidX, State.prevMidY);
-        
-        // Desenha a curva: (prevX, prevY) é o ponto de controle
-        this.ctx.quadraticCurveTo(State.prevX, State.prevY, midX, midY);
-        
-        this.ctx.stroke();
+        // Chama Função Auxiliar
+        this._drawSegment(State.prevMidX, State.prevMidY, State.prevX, State.prevY, midX, midY);
 
-        // Atualiza as posições para o próximo segmento
         State.prevX = currentX;
         State.prevY = currentY;
         State.prevMidX = midX;
